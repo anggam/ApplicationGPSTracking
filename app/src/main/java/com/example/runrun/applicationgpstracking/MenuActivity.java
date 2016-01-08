@@ -1,6 +1,7 @@
 package com.example.runrun.applicationgpstracking;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,6 +16,8 @@ public class MenuActivity extends AppCompatActivity {
     private FriendsAdapter friendsAdapter;
     private ListView friendsLV;
     private ProgressBar friendsPB;
+    private DrawerLayout drawerLayout;
+    private View drawerMenu;
 
     private View friendPage;
     private View mapPage;
@@ -35,6 +38,8 @@ public class MenuActivity extends AppCompatActivity {
         friendsLV = (ListView) findViewById(R.id.friend_lv);
         friendsPB = (ProgressBar) findViewById(R.id.friend_list_pb);
         friendsLV.setEmptyView(friendsPB);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerMenu = findViewById(R.id.left_drawer);
     }
 
     private void initListView() {
@@ -49,11 +54,13 @@ public class MenuActivity extends AppCompatActivity {
     public void openFriendPage(View view) {
         friendPage.setVisibility(View.VISIBLE);
         mapPage.setVisibility(View.GONE);
+        drawerLayout.closeDrawer(drawerMenu);
     }
 
     public void openMap(View view) {
         friendPage.setVisibility(View.GONE);
         mapPage.setVisibility(View.VISIBLE);
+        drawerLayout.closeDrawer(drawerMenu);
     }
 
     @Override
