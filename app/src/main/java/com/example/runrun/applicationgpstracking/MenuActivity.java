@@ -10,6 +10,17 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.runrun.applicationgpstracking.adapters.FriendsAdapter;
+import com.example.runrun.applicationgpstracking.helpers.HttpHelper;
+import com.example.runrun.applicationgpstracking.model.User;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MenuActivity extends AppCompatActivity {
     private Toolbar actionBarToolbar;
@@ -29,6 +40,7 @@ public class MenuActivity extends AppCompatActivity {
         initViews();
         initActionbar();
         initListView();
+        getFriends();
     }
 
     private void initViews() {
@@ -37,9 +49,37 @@ public class MenuActivity extends AppCompatActivity {
         mapPage = findViewById(R.id.map_page);
         friendsLV = (ListView) findViewById(R.id.friend_lv);
         friendsPB = (ProgressBar) findViewById(R.id.friend_list_pb);
-        friendsLV.setEmptyView(friendsPB);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerMenu = findViewById(R.id.left_drawer);
+    }
+
+    private void getFriends() {
+        HttpHelper.get("db_gpstracking/get_friend.php", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                friendsPB.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                friendsPB.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                ArrayList<User> newUsers = new ArrayList<User>();
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        User user = new User();
+                        user.setName(jsonObject.getString("user_name"));
+                    }
+                    friendsAdapter.setContent(newUsers);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initListView() {
