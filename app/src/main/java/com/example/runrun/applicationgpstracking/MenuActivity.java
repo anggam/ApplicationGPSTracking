@@ -46,6 +46,16 @@ public class MenuActivity extends AppCompatActivity {
         setSupportActionBar(actionBarToolbar);
     }
 
+    public void openFriendPage(View view) {
+        friendPage.setVisibility(View.VISIBLE);
+        mapPage.setVisibility(View.GONE);
+    }
+
+    public void openMap(View view) {
+        friendPage.setVisibility(View.GONE);
+        mapPage.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menuactivity_menu, menu);
