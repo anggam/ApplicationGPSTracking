@@ -73,6 +73,8 @@ public class MenuActivity extends AppCompatActivity {
                         JSONObject jsonObject = response.getJSONObject(i);
                         User user = new User();
                         user.setName(jsonObject.getString("user_name"));
+                        newUsers.add(user);
+
                     }
                     friendsAdapter.setContent(newUsers);
                 } catch (JSONException e) {
