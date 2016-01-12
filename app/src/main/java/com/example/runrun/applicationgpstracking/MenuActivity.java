@@ -3,6 +3,7 @@ package com.example.runrun.applicationgpstracking;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MenuActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MenuActivity extends ActionBarActivity implements OnMapReadyCallback {
     private Toolbar actionBarToolbar;
     private FriendsAdapter friendsAdapter;
     private ListView friendsLV;
