@@ -21,6 +21,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+<<<<<<< HEAD
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA1tctpUb3wVOW2PJPUDhZ9BhtwPh6Cx8w " />
@@ -34,22 +35,39 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+=======
+        <activity android:name=".SplashscreenActivity" >
+>>>>>>> 197a24e8f4228080e243bc7ce96f19dcbf651b28
         </activity>
         <activity android:name=".LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" >
         </activity>
         <activity android:name=".MenuActivity" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".LogoutActivity" >
         </activity>
         <activity android:name=".MainActivity" >
         </activity>
+<<<<<<< HEAD
         <activity android:name=".MapsActivity" >
         </activity>
+=======
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBGldCflzV2P_cahGZQ0TPsJ-khpnpJZZI" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+>>>>>>> 197a24e8f4228080e243bc7ce96f19dcbf651b28
     </application>
 
 </manifest>

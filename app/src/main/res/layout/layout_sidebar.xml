@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/android2">
 
-    <GridView
+    <ImageView
         android:id="@+id/gridView"
+<<<<<<< HEAD
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:background="@drawable/android4"
@@ -87,5 +88,68 @@
         android:layout_alignTop="@+id/imageView3"
         android:layout_alignLeft="@+id/tvHistory"
         android:layout_alignStart="@+id/tvHistory" />
+=======
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:scaleType="center"
+        android:src="@drawable/gas" />
+
+    <LinearLayout
+        android:id="@+id/sidebar_menu_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gridView"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/contact" />
+
+        <TextView
+            android:id="@+id/tvContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="openFriendPage"
+            android:text="Friend Contact"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sidebar_menu_friend"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/history" />
+
+        <TextView
+            android:id="@+id/tvHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="openMap"
+            android:text="History"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+>>>>>>> 197a24e8f4228080e243bc7ce96f19dcbf651b28
 
 </RelativeLayout>

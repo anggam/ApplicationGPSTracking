@@ -128,13 +128,22 @@
     <orderEntry type="library" exported="" name="play-services-cast-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-vision-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-wallet-8.4.0" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="support-v4-23.1.1" level="project" />
+=======
+>>>>>>> 197a24e8f4228080e243bc7ce96f19dcbf651b28
     <orderEntry type="library" exported="" name="play-services-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-analytics-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-drive-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="httpclient-4.3.6" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
+=======
+    <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-23.0.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
+>>>>>>> 197a24e8f4228080e243bc7ce96f19dcbf651b28
     <orderEntry type="library" exported="" name="play-services-ads-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-appinvite-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-safetynet-8.4.0" level="project" />

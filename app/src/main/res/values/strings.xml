@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Application GPS Tracking</string>
     <string name="title_activity_maps">Map</string>
+<<<<<<< HEAD
     <string name="title_activity_maps2">Map</string>
+=======
+
+    <string name="drawer_opened">Opened</string>
+    <string name="drawer_closed">Closed</string>
+>>>>>>> 197a24e8f4228080e243bc7ce96f19dcbf651b28
 </resources>
