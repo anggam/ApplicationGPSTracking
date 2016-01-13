@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Application GPS Tracking</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="drawer_opened">Opened</string>
+    <string name="drawer_closed">Closed</string>
 </resources>

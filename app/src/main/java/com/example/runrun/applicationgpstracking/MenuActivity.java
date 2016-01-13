@@ -1,13 +1,18 @@
 package com.example.runrun.applicationgpstracking;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -37,11 +42,13 @@ public class MenuActivity extends ActionBarActivity implements OnMapReadyCallbac
     private ProgressBar friendsPB;
     private DrawerLayout drawerLayout;
     private View drawerMenu;
+    LinearLayout contentFrame;
 
     private View friendPage;
     private View mapPage;
 
     private GoogleMap mMaps;
+    private float lastTranslate = 0.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,7 @@ public class MenuActivity extends ActionBarActivity implements OnMapReadyCallbac
         friendsPB = (ProgressBar) findViewById(R.id.friend_list_pb);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerMenu = findViewById(R.id.left_drawer);
+        contentFrame = (LinearLayout) findViewById(R.id.content_frame);
     }
 
     /**
@@ -125,6 +133,31 @@ public class MenuActivity extends ActionBarActivity implements OnMapReadyCallbac
 
     private void initActionbar() {
         setSupportActionBar(actionBarToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, actionBarToolbar, R.string.drawer_opened, R.string.drawer_closed){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                //we translate the content along with the navigation menu sliding
+                //ref : http://stackoverflow.com/questions/23783496/how-to-slide-the-actionbar-along-with-the-navigationdrawer
+                float moveFactor = drawerView.getWidth() * slideOffset;
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+                    contentFrame.setTranslationX(moveFactor);
+                } else {
+                    TranslateAnimation translateAnimation = new TranslateAnimation(lastTranslate, moveFactor, 0.0f, 0.0f);
+                    translateAnimation.setDuration(0);
+                    translateAnimation.setFillAfter(true);
+                    contentFrame.startAnimation(translateAnimation);
+
+                    lastTranslate = moveFactor;
+                }
+            }
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.syncState();
     }
 
     public void openFriendPage(View view) {
