@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -41,10 +42,17 @@ public class GPSService extends Service implements LocationListener {
     // GPS akan update pada waktu interval
     private static final long MIN_WAKTU_GPS_UPDATE = 1000 * 60 * 1;
     protected LocationManager locManager;
+    private GPSServiceBinder binder = new GPSServiceBinder();
 
     public GPSService(Context context) {
         _context = context;
         getLocation();
+    }
+
+    public class GPSServiceBinder extends Binder {
+        GPSService getService() {
+            return GPSService.this;
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -136,7 +144,7 @@ public class GPSService extends Service implements LocationListener {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO Auto-generated method stub
-        return null;
+        return binder;
     }
 
     public double getLatitude() {

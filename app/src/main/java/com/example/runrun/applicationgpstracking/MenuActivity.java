@@ -1,19 +1,24 @@
 package com.example.runrun.applicationgpstracking;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.runrun.applicationgpstracking.adapters.FriendsAdapter;
 import com.example.runrun.applicationgpstracking.helpers.HttpHelper;
@@ -50,6 +55,7 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
     private float lastTranslate = 0.0f;
 
     private SupportMapFragment mapFragment;
+    private GPSService gpsService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +77,28 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(i);
             }
         });
+
+        connectToService();
     }
+
+    private void connectToService() {
+        Intent intent = new Intent(this, GPSService.class);
+        bindService(intent, serviceConnection, 0);
+    }
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            GPSService.GPSServiceBinder binder = (GPSService.GPSServiceBinder) iBinder;
+            gpsService = binder.getService();
+            Toast.makeText(MenuActivity.this, "Service connected", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            gpsService = null;
+        }
+    };
 
     private void initViews() {
         actionBarToolbar = (Toolbar) findViewById(R.id.action_bar);
@@ -168,6 +195,30 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menuactivity_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        if(menuId == R.id.setting) {
+            updateLocationToServer();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
+    }
+
+    private void updateLocationToServer() {
+        if(gpsService.canGetLocation()) {
+            double longitude = gpsService.getLongitude();
+            double latitude = gpsService.getLatitude();
+
+            Toast.makeText(MenuActivity.this, longitude+" | "+latitude, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

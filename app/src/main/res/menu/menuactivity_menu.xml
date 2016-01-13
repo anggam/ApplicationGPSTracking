@@ -3,5 +3,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/setting"
         app:showAsAction="never"
-        android:title="Settings" />
+        android:title="Update to Server" />
 </menu>
