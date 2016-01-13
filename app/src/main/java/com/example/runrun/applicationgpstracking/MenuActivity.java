@@ -1,5 +1,6 @@
 package com.example.runrun.applicationgpstracking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.runrun.applicationgpstracking.adapters.FriendsAdapter;
 import com.example.runrun.applicationgpstracking.helpers.HttpHelper;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MenuActivity extends ActionBarActivity implements OnMapReadyCallback {
+public class MenuActivity extends AppCompatActivity {
     private Toolbar actionBarToolbar;
     private FriendsAdapter friendsAdapter;
     private ListView friendsLV;
@@ -40,8 +42,6 @@ public class MenuActivity extends ActionBarActivity implements OnMapReadyCallbac
 
     private View friendPage;
     private View mapPage;
-
-    private GoogleMap mMaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +53,17 @@ public class MenuActivity extends ActionBarActivity implements OnMapReadyCallbac
         initListView();
         getFriends();
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.maps);
-        mapFragment.getMapAsync(this);
+        TextView textView = (TextView) findViewById(R.id.tvMaps);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO Auto-generated method stub
+                Intent i = new Intent(MenuActivity.this, MapsActivity.class);
+                i.putExtra("pesan", "Form Activity Login");
+                startActivity(i);
+            }
+        });
+
     }
 
     private void initViews() {
@@ -66,25 +74,6 @@ public class MenuActivity extends ActionBarActivity implements OnMapReadyCallbac
         friendsPB = (ProgressBar) findViewById(R.id.friend_list_pb);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerMenu = findViewById(R.id.left_drawer);
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMaps = googleMap;
-        // Add a marker in Indoneisa and move the camera
-        LatLng indonesia = new LatLng(-6.914744, 107.609810);
-        mMaps.addMarker(new MarkerOptions().position(indonesia).title("Marker in Indonesia"));
-        mMaps.moveCamera(CameraUpdateFactory.newLatLng(indonesia));
     }
 
     private void getFriends() {
