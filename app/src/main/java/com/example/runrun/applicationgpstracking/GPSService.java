@@ -23,8 +23,6 @@ import android.provider.Settings;
 
 public class GPSService extends Service implements LocationListener {
 
-    private final Context _context;
-
     // cek apakah GPS aktif ?
     boolean isGPSEnable = false;
 
@@ -44,8 +42,7 @@ public class GPSService extends Service implements LocationListener {
     protected LocationManager locManager;
     private GPSServiceBinder binder = new GPSServiceBinder();
 
-    public GPSService(Context context) {
-        _context = context;
+    public GPSService() {
         getLocation();
     }
 
@@ -58,7 +55,7 @@ public class GPSService extends Service implements LocationListener {
     @TargetApi(Build.VERSION_CODES.M)
     private Location getLocation() {
         try {
-            locManager = (LocationManager) _context.getSystemService(LOCATION_SERVICE);
+            locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             // cek GPS status
             isGPSEnable = locManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             // cek status koneksi
@@ -172,7 +169,7 @@ public class GPSService extends Service implements LocationListener {
     }
 
     public void showSettingAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(_context);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         // title Alertnya
         alertDialog.setTitle("GPS Setting");
         // pesan alert
@@ -182,7 +179,7 @@ public class GPSService extends Service implements LocationListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                _context.startActivity(intent);
+                startActivity(intent);
             }
         });
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

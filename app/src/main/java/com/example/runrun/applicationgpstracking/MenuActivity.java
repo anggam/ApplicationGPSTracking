@@ -1,6 +1,7 @@
 package com.example.runrun.applicationgpstracking;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
@@ -83,7 +84,7 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void connectToService() {
         Intent intent = new Intent(this, GPSService.class);
-        bindService(intent, serviceConnection, 0);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     ServiceConnection serviceConnection = new ServiceConnection() {
