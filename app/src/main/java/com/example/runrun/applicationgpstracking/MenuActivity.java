@@ -18,7 +18,12 @@ import android.widget.TextView;
 import com.example.runrun.applicationgpstracking.adapters.FriendsAdapter;
 import com.example.runrun.applicationgpstracking.helpers.HttpHelper;
 import com.example.runrun.applicationgpstracking.model.User;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -29,7 +34,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Toolbar actionBarToolbar;
     private FriendsAdapter friendsAdapter;
     private ListView friendsLV;
@@ -43,6 +48,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private GoogleMap mMaps;
     private float lastTranslate = 0.0f;
+
+    private SupportMapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +71,6 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
 
     private void initViews() {
@@ -76,6 +82,9 @@ public class MenuActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerMenu = findViewById(R.id.left_drawer);
         contentFrame = (LinearLayout) findViewById(R.id.content_frame);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.maps_google);
+        mapFragment.getMapAsync(this);
     }
 
     private void getFriends() {
@@ -159,5 +168,24 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menuactivity_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMaps = googleMap;
+        // Add a marker in Indoneisa and move the camera
+        LatLng indonesia = new LatLng(-6.914744, 107.609810);
+        mMaps.addMarker(new MarkerOptions().position(indonesia).title("Marker in Indonesia"));
+        mMaps.moveCamera(CameraUpdateFactory.newLatLng(indonesia));
     }
 }
