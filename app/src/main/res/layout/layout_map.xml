@@ -7,9 +7,7 @@
     android:visibility="gone"
     android:padding="20dp">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/maps"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <View
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="#ff39d8ca"/>
