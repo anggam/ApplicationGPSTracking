@@ -43,6 +43,12 @@ public class GPSService extends Service implements LocationListener {
     private GPSServiceBinder binder = new GPSServiceBinder();
 
     public GPSService() {
+
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
         getLocation();
     }
 
@@ -55,7 +61,7 @@ public class GPSService extends Service implements LocationListener {
     @TargetApi(Build.VERSION_CODES.M)
     private Location getLocation() {
         try {
-            locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            locManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
             // cek GPS status
             isGPSEnable = locManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             // cek status koneksi

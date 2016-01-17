@@ -29,6 +29,10 @@ public class GPSTrackingApplication extends Application {
         editor.apply();
     }
 
+    public int getMyUserId() {
+        return pref.getInt("my_user_id", 0);
+    }
+
     public boolean isLoggedIn() {
         int userId = pref.getInt("my_user_id", 0);
         return userId != 0;

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -31,18 +32,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
 public class MenuActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Toolbar actionBarToolbar;
     private FriendsAdapter friendsAdapter;
+    private FriendsAdapter chooseFriendsAdapter;
     private ListView friendsLV;
     private ProgressBar friendsPB;
     private DrawerLayout drawerLayout;
@@ -51,12 +57,14 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private View friendPage;
     private View mapPage;
+    private View mapsGoogleView;
 
     private GoogleMap mMaps;
     private float lastTranslate = 0.0f;
 
     private SupportMapFragment mapFragment;
     private GPSService gpsService;
+    private ListView chooseFriendsLV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +113,9 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
         actionBarToolbar = (Toolbar) findViewById(R.id.action_bar);
         friendPage = findViewById(R.id.friend_page);
         mapPage = findViewById(R.id.map_page);
+        mapsGoogleView = findViewById(R.id.maps_google);
         friendsLV = (ListView) findViewById(R.id.friend_lv);
+        chooseFriendsLV = (ListView) findViewById(R.id.choose_friend_lv);
         friendsPB = (ProgressBar) findViewById(R.id.friend_list_pb);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerMenu = findViewById(R.id.left_drawer);
@@ -130,15 +140,21 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 ArrayList<User> newUsers = new ArrayList<User>();
+                ArrayList<User> newUsers1 = new ArrayList<User>();
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject jsonObject = response.getJSONObject(i);
+
                         User user = new User();
                         user.setName(jsonObject.getString("user_name"));
                         newUsers.add(user);
 
+                        User user1 = new User();
+                        user1.setName(jsonObject.getString("user_name"));
+                        newUsers1.add(user1);
                     }
                     friendsAdapter.setContent(newUsers);
+                    chooseFriendsAdapter.setContent(newUsers1);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -148,7 +164,16 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void initListView() {
         friendsAdapter = new FriendsAdapter(this);
+        chooseFriendsAdapter = new FriendsAdapter(this);
         friendsLV.setAdapter(friendsAdapter);
+        chooseFriendsLV.setAdapter(chooseFriendsAdapter);
+        chooseFriendsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                chooseFriendsLV.setVisibility(View.INVISIBLE);
+                mapsGoogleView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initActionbar() {
@@ -189,6 +214,8 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void openMap(View view) {
         friendPage.setVisibility(View.GONE);
         mapPage.setVisibility(View.VISIBLE);
+        chooseFriendsLV.setVisibility(View.VISIBLE);
+        mapsGoogleView.setVisibility(View.INVISIBLE);
         drawerLayout.closeDrawer(drawerMenu);
     }
 
@@ -218,8 +245,36 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
             double longitude = gpsService.getLongitude();
             double latitude = gpsService.getLatitude();
 
-            Toast.makeText(MenuActivity.this, longitude+" | "+latitude, Toast.LENGTH_SHORT).show();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(System.currentTimeMillis());
+            String currentDate = simpleDateFormat.format(date);
+
+            simpleDateFormat.applyPattern("HH:mm:ss");
+            String currentTime = simpleDateFormat.format(date);
+
+            int myUserId = GPSTrackingApplication.getInstance().getMyUserId();
+
+            RequestParams params = new RequestParams();
+            params.put("history_time", currentTime);
+            params.put("history_date", currentDate);
+            params.put("user_id", myUserId);
+            params.put("latitude", latitude);
+            params.put("longitude", longitude);
+            HttpHelper.post("db_gpstracking/history.php", params, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        Toast.makeText(MenuActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        } else {
+            Toast.makeText(MenuActivity.this, "Cannot get Location", Toast.LENGTH_LONG).show();
         }
+
     }
 
     /**

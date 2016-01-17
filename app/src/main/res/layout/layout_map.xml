@@ -13,4 +13,9 @@
         android:id="@+id/maps_google"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <ListView
+        android:id="@+id/choose_friend_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </FrameLayout>
