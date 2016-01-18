@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("user_phone", phoneNumberET.getText().toString());
         params.put("user_address", addressET.getText().toString());
         params.put("user_age", ageET.getText().toString());
-        HttpHelper.post("db_gpstracking/register.php", params, new JsonHttpResponseHandler() {
+        HttpHelper.post("register.php", params, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("ERROR BRAY", responseString);

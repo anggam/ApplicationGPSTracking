@@ -126,7 +126,7 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getFriends() {
-        HttpHelper.get("db_gpstracking/get_friend.php", null, new JsonHttpResponseHandler() {
+        HttpHelper.get("get_friend.php", null, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 friendsPB.setVisibility(View.VISIBLE);
@@ -147,10 +147,12 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         User user = new User();
                         user.setName(jsonObject.getString("user_name"));
+                        user.setUser_id(jsonObject.getInt("user_id"));
                         newUsers.add(user);
 
                         User user1 = new User();
                         user1.setName(jsonObject.getString("user_name"));
+                        user.setUser_id(jsonObject.getInt("user_id"));
                         newUsers1.add(user1);
                     }
                     friendsAdapter.setContent(newUsers);
@@ -166,6 +168,15 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
         friendsAdapter = new FriendsAdapter(this);
         chooseFriendsAdapter = new FriendsAdapter(this);
         friendsLV.setAdapter(friendsAdapter);
+        friendsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(MenuActivity.this, ProfileActivity.class);
+                i.putExtra("user_id", friendsAdapter.getItem(position).getUser_id());
+                startActivity(i);
+            }
+        });
+
         chooseFriendsLV.setAdapter(chooseFriendsAdapter);
         chooseFriendsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -260,7 +271,7 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
             params.put("user_id", myUserId);
             params.put("latitude", latitude);
             params.put("longitude", longitude);
-            HttpHelper.post("db_gpstracking/history.php", params, new JsonHttpResponseHandler(){
+            HttpHelper.post("history.php", params, new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {

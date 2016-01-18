@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.put("user_name", usernameET.getText().toString());
         params.put("user_pass", passwordET.getText().toString());
-        HttpHelper.post("db_gpstracking/login.php", params, new JsonHttpResponseHandler() {
+        HttpHelper.post("login.php", params, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int StatusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("EROR BRAY", responseString);

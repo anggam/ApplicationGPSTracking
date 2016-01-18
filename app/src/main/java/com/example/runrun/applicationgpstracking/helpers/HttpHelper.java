@@ -8,7 +8,7 @@ import com.loopj.android.http.RequestParams;
  * Created by RUNRUN on 12/28/2015.
  */
 public class HttpHelper {
-    private static final String BASE_URL = "http://192.168.43.145/";
+    private static final String BASE_URL = "http://gpstracking.esy.es/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

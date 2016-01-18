@@ -36,8 +36,8 @@ public class FriendsAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public User getItem(int i) {
+        return contents.get(i);
     }
 
     @Override

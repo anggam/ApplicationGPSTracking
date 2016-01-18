@@ -49,11 +49,11 @@ public class GPSService extends Service implements LocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        getLocation();
     }
 
     public class GPSServiceBinder extends Binder {
         GPSService getService() {
+            GPSService.this.getLocation();
             return GPSService.this;
         }
     }
