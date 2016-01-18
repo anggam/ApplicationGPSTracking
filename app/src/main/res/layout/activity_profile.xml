@@ -22,55 +22,35 @@
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
             android:id="@+id/tvEmail"
-            android:text="E-mail"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etEmail"/>
+            android:text=""/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:id="@+id/tvUsername"
-            android:text="Username"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etUsername"/>
+            android:text=""/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:id="@+id/tvAge"
-            android:text="Age"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etAge"/>
+            android:text=""/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:id="@+id/tvPhone"
-            android:text="Phone"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etPhone"/>
+            android:text=""/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:id="@+id/tvAddress"
-            android:text="Address"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etAddress"/>
+            android:text=""/>
 
     </LinearLayout>
 </ScrollView>

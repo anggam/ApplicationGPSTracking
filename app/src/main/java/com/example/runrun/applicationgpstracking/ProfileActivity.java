@@ -18,22 +18,22 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextView emailET;
-    private TextView usernameET;
-    private TextView ageET;
-    private TextView phoneET;
-    private TextView addressET;
+    private TextView emailTV;
+    private TextView usernameTV;
+    private TextView ageTV;
+    private TextView phoneTV;
+    private TextView addressTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        emailET = (EditText) findViewById(R.id.etEmail);
-        usernameET = (EditText) findViewById(R.id.etUsername);
-        ageET = (EditText) findViewById(R.id.etAge);
-        phoneET = (EditText) findViewById(R.id.etPhone);
-        addressET = (EditText) findViewById(R.id.etAddress);
+        emailTV = (TextView) findViewById(R.id.tvEmail);
+        usernameTV = (TextView) findViewById(R.id.tvUsername);
+        ageTV = (TextView) findViewById(R.id.tvAge);
+        phoneTV = (TextView) findViewById(R.id.tvPhone);
+        addressTV = (TextView) findViewById(R.id.tvAddress);
 
         Intent intent = getIntent();
         if(intent != null) {
