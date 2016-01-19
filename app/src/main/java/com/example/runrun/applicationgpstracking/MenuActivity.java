@@ -200,7 +200,6 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
-                    GoogleMap map = mapFragment.getMap();
                     PolylineOptions options = new PolylineOptions();
                     MarkerOptions markerOptions = new MarkerOptions();
 
@@ -217,12 +216,14 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }
                     }
 
-                    Polyline line = map.addPolyline(options);
+                    Polyline line = mMaps.addPolyline(options);
                     line.setWidth(5);
                     line.setColor(Color.RED);
 
-                    map.addMarker(markerOptions);
-                    map.moveCamera(CameraUpdateFactory.newLatLng(markerOptions.getPosition()));
+                    if(markerOptions.getPosition() != null) {
+                        mMaps.addMarker(markerOptions);
+                        mMaps.moveCamera(CameraUpdateFactory.newLatLng(markerOptions.getPosition()));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -345,9 +346,5 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMaps = googleMap;
-        // Add a marker in Indoneisa and move the camera
-        LatLng indonesia = new LatLng(-6.914744, 107.609810);
-        mMaps.addMarker(new MarkerOptions().position(indonesia).title("Marker in Indonesia"));
-        mMaps.moveCamera(CameraUpdateFactory.newLatLng(indonesia));
     }
 }
