@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -31,6 +32,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -183,8 +186,49 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 chooseFriendsLV.setVisibility(View.INVISIBLE);
                 mapsGoogleView.setVisibility(View.VISIBLE);
+
+                User user = chooseFriendsAdapter.getItem(position);
+                createPath(user.getUser_id());
             }
         });
+    }
+
+    private void createPath(int userId) {
+        RequestParams params = new RequestParams();
+        params.put("user_id", userId);
+        HttpHelper.post("get_history.php", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                try {
+                    GoogleMap map = mapFragment.getMap();
+                    PolylineOptions options = new PolylineOptions();
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    for (int index = 0; index < response.length(); index++) {
+                        JSONObject object = response.getJSONObject(index);
+                        double latitude = object.getDouble("latitude");
+                        double longitude = object.getDouble("longitude");
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        options.add(latLng);
+
+                        if(index == response.length() - 1) {
+                            markerOptions.position(latLng);
+                            markerOptions.title("Last Position");
+                        }
+                    }
+
+                    Polyline line = map.addPolyline(options);
+                    line.setWidth(5);
+                    line.setColor(Color.RED);
+
+                    map.addMarker(markerOptions);
+                    map.moveCamera(CameraUpdateFactory.newLatLng(markerOptions.getPosition()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     private void initActionbar() {
