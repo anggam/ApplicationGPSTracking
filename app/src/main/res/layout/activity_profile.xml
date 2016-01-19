@@ -20,7 +20,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="40dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:id="@+id/tvEmail2"
+            android:text="E-mail :"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
             android:id="@+id/tvEmail"
             android:text=""/>
 
@@ -28,6 +36,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:id="@+id/tvUsername2"
+            android:text="Username :"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
             android:id="@+id/tvUsername"
             android:text=""/>
 
@@ -35,6 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:id="@+id/tvAge2"
+            android:text="Age :"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
             android:id="@+id/tvAge"
             android:text=""/>
 
@@ -42,6 +66,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:id="@+id/tvPhone2"
+            android:text="Phone Number :"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
             android:id="@+id/tvPhone"
             android:text=""/>
 
@@ -49,6 +81,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:id="@+id/tvAddress2"
+            android:text="Address :"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
             android:id="@+id/tvAddress"
             android:text=""/>
 

@@ -8,8 +8,8 @@
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:scaleType="center"
-        android:src="@drawable/gas" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/android4" />
 
     <ImageView
         android:id="@+id/imageView"

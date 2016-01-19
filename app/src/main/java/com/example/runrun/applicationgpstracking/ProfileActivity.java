@@ -41,6 +41,14 @@ public class ProfileActivity extends AppCompatActivity {
             getUserDetail(userId);
         }
     }
+    private void setText() {
+        emailTV.setText("tvEmail");
+        usernameTV.setText("tvUsername");
+        ageTV.setText("tvAge");
+        phoneTV.setText("tvPhone");
+        addressTV.setText("tvAddress");
+
+    }
 
     private void getUserDetail(int userId) {
         RequestParams params = new RequestParams();
@@ -49,11 +57,17 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    String user_email = response.getString("user_email");
-                    String user_name = response.getString("user_name");
-                    String user_age = response.getString("user_age");
-                    String user_phone = response.getString("user_phone");
-                    String user_address = response.getString("user_address");
+                    String userEmail = response.getString("user_email");
+                    emailTV.setText(userEmail);
+                    String userName = response.getString("user_name");
+                    usernameTV.setText(userName);
+                    String userAge = response.getString("user_age");
+                    ageTV.setText(userAge);
+                    String userPhone = response.getString("user_phone");
+                    phoneTV.setText(userPhone);
+                    String userAddress = response.getString("user_address");
+                    addressTV.setText(userAddress);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
