@@ -31,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -155,7 +156,7 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         User user1 = new User();
                         user1.setName(jsonObject.getString("user_name"));
-                        user.setUser_id(jsonObject.getInt("user_id"));
+                        user1.setUser_id(jsonObject.getInt("user_id"));
                         newUsers1.add(user1);
                     }
                     friendsAdapter.setContent(newUsers);
@@ -188,14 +189,15 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mapsGoogleView.setVisibility(View.VISIBLE);
 
                 User user = chooseFriendsAdapter.getItem(position);
-                createPath(user.getUser_id());
+                createPath(user);
             }
         });
     }
 
-    private void createPath(int userId) {
+    private void createPath(final User user) {
+        mMaps.clear();
         RequestParams params = new RequestParams();
-        params.put("user_id", userId);
+        params.put("user_id", user.getUser_id());
         HttpHelper.post("get_history.php", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -212,7 +214,6 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         if(index == response.length() - 1) {
                             markerOptions.position(latLng);
-                            markerOptions.title("Last Position");
                         }
                     }
 
@@ -221,8 +222,10 @@ public class MenuActivity extends AppCompatActivity implements OnMapReadyCallbac
                     line.setColor(Color.RED);
 
                     if(markerOptions.getPosition() != null) {
-                        mMaps.addMarker(markerOptions);
+                        markerOptions.title(user.getName());
+                        Marker marker = mMaps.addMarker(markerOptions);
                         mMaps.moveCamera(CameraUpdateFactory.newLatLng(markerOptions.getPosition()));
+                        marker.showInfoWindow();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
